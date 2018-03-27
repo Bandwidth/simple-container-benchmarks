@@ -5,8 +5,8 @@ var exec = require('shelljs').exec;
 server.get('/disk', disk);
 function disk(req, res, next) {
 	console.log('/disk request');
-	var thing = exec("(dd bs=1M count=1024 if=/dev/zero of=/simple-container-benchmarks-writetest conv=fdatasync) 2>&1 | tail -1 | sed -e 's/^ *//' -e 's/ *$//'", {silent:true}).output;
-	exec("rm /simple-container-benchmarks-writetest", {silent:true}).output;
+	var thing = exec("(dd bs=1M count=1024 if=/dev/zero of=/tmp/simple-container-benchmarks-writetest conv=fdatasync) 2>&1 | tail -1 | sed -e 's/^ *//' -e 's/ *$//'", {silent:true}).stdout;
+	exec("rm /tmp/simple-container-benchmarks-writetest", {silent:true}).stdout;
 
 	console.log(thing);
 
@@ -18,7 +18,7 @@ function disk(req, res, next) {
 server.get('/cpu', cpu);
 function cpu(req, res, next) {
 	console.log('/cpu request');
-	var thing = exec("(dd if=/dev/urandom bs=1M count=256 | md5sum) 2>&1 >/dev/null | tail -1 | sed -e 's/^ *//' -e 's/ *$//'", {silent:true}).output;
+	var thing = exec("(dd if=/dev/urandom bs=1M count=256 | md5sum) 2>&1 >/dev/null | tail -1 | sed -e 's/^ *//' -e 's/ *$//'", {silent:true}).stdout;
 
 	console.log(thing);
 
@@ -31,8 +31,8 @@ server.get('/info', info);
 function info(req, res, next) {
 	console.log('/info request');
 
-	var mem = exec("free | head -2", {silent:true}).output;
-	var cpu = exec("lscpu", {silent:true}).output;
+	var mem = exec("free | head -2", {silent:true}).stdout;
+	var cpu = exec("lscpu", {silent:true}).stdout;
 
 	console.log(mem + cpu);
 
@@ -48,7 +48,7 @@ function ips(req, res, next) {
 	var output = "";
 
 	// the host from the request + what the server thinks its hostname is
-	output += "host: " + req.headers.host + " " + exec("hostname", {silent:true}).output;
+	output += "host: " + req.headers.host + " " + exec("hostname", {silent:true}).stdout;
 
 	// the ethernet interface IPs
 	// stolen from http://stackoverflow.com/a/8440736
