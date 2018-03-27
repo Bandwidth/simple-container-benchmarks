@@ -10,7 +10,7 @@ echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
 echo 'Performance benchmarks' >> /tmp/simple-container-benchmarks.txt
 echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
 echo "dockerhost: $DOCKER_HOST" >> /tmp/simple-container-benchmarks.txt
-curl -sS http://$TARGET/ips >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
+curl -sS http://$TARGET:8080/ips >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
 echo 'date: '$(date) >> /tmp/simple-container-benchmarks.txt
 
 
@@ -21,7 +21,7 @@ echo 'FS write performance' >> /tmp/simple-container-benchmarks.txt
 echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
 COUNTER=0
 while [	 $COUNTER -lt 10 ]; do
-	curl -sS http://$TARGET/disk >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
+	curl -sS http://$TARGET:8080/disk >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
 	let COUNTER=COUNTER+1
 done
 
@@ -34,7 +34,7 @@ echo 'CPU performance' >> /tmp/simple-container-benchmarks.txt
 echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
 COUNTER=0
 while [	 $COUNTER -lt 10 ]; do
-	curl -sS http://$TARGET/cpu >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
+	curl -sS http://$TARGET:8080/cpu >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
 	let COUNTER=COUNTER+1
 done
 
@@ -45,7 +45,7 @@ echo '' >> /tmp/simple-container-benchmarks.txt
 echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
 echo 'System info' >> /tmp/simple-container-benchmarks.txt
 echo '------------------------------' >> /tmp/simple-container-benchmarks.txt
-curl -sS http://$TARGET/info >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
+curl -sS http://$TARGET:8080/info >> /tmp/simple-container-benchmarks.txt || echo 'curl: failed to connect' >> /tmp/simple-container-benchmarks.txt
 
 # report
 cat /tmp/simple-container-benchmarks.txt
