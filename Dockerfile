@@ -18,6 +18,6 @@ ADD ./server /server
 RUN cp -r /tmp/node_modules /server/.
 
 # expose port 80 for the node server
-EXPOSE 80 5001
+EXPOSE 8080 5001
 
 CMD ["/usr/local/sbin/simple-container-benchmarks-init"]
